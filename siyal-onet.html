@@ -19,44 +19,59 @@
   --bg:#0f1720; --panel:#17222e; --ink:#e6edf3; --muted:#93a3b3; --line:#2a3846;
   --accent:#f0a33a; --buy:#2fbf84; --sell:#ef6262; --wait:#8a99a8; color-scheme:dark}}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;
   padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-.wrap{max-width:560px;margin:0 auto;padding-block:20px 40px;
+.wrap{max-width:560px;margin:0 auto;padding-block:16px 40px;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
-  display:flex;flex-direction:column;gap:16px}
-header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  display:flex;flex-direction:column;gap:14px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 h1{font-family:var(--display);font-weight:800;font-size:28px;margin:0;letter-spacing:-.01em}
 h1 span{color:var(--accent)}
+h2{font-family:var(--display);font-weight:600;font-size:18px;margin:4px 0 0}
 .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
   border:1px solid var(--line);border-radius:4px;padding:2px 6px}
-.tag.live{color:var(--buy);border-color:var(--buy)}
 .note{font-size:13px;color:var(--muted);margin:0}
-.keybox{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:10px}
-.keybox h2{margin:0}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:10px}
 .keyrow{display:flex;gap:8px}
-input{flex:1;min-width:0;font:500 15px var(--mono);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:9px 10px}
+input[type=text]{flex:1;min-width:0;font:500 16px var(--mono);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:9px 10px}
 button{font:600 15px var(--body);background:var(--accent);color:#1b1206;border:0;border-radius:6px;padding:9px 14px;cursor:pointer}
-button.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);font-size:13px;padding:6px 10px}
-.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-label{display:flex;flex-direction:column;gap:4px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
-select{font:500 15px var(--body);color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:9px 10px}
+button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-size:14px;padding:8px 12px}
+button.ghost.on{border-color:var(--buy);color:var(--buy)}
+select{font:500 16px var(--body);color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:9px 10px;width:100%}
 select:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.lbl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:500 14px var(--body);padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--muted)}
+.chip.on{border-color:var(--accent);color:var(--ink);background:color-mix(in srgb,var(--accent) 16%,var(--panel))}
+.row2{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}
+.signal{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;align-items:center;
+  border-left:6px solid var(--sig,var(--wait));background:var(--panel);border-radius:6px;padding:14px 16px}
+.signal .big{font-family:var(--display);font-weight:800;font-size:34px;line-height:1.05;color:var(--sig,var(--wait));grid-row:span 2;min-width:110px}
+.signal .big small{display:block;font:600 13px var(--mono);color:var(--muted);letter-spacing:.04em}
+.signal .why{font-size:14px;min-width:0}
+.signal .meta{font-family:var(--mono);font-size:13px;color:var(--muted);min-width:0}
+.signal .meta b{color:var(--sig,var(--ink))}
+.signal.flash{animation:flash 1s ease 3}
+@keyframes flash{50%{background:color-mix(in srgb,var(--sig) 22%,var(--panel))}}
+@media (prefers-reduced-motion:reduce){.signal.flash{animation:none}}
+.board{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.pcard{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:8px 10px;text-align:left;color:var(--ink);font:inherit;display:flex;flex-direction:column;gap:2px}
+.pcard.focus{border-color:var(--accent)}
+.pcard .top{display:flex;justify-content:space-between;gap:6px;font-weight:600}
+.pcard .num{font-family:var(--mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.st{font:700 11px var(--body);letter-spacing:.06em;padding:1px 7px;border-radius:999px;color:var(--panel);background:var(--wait)}
+.st.BUY{background:var(--buy)}.st.SELL{background:var(--sell)}.st.ERR{background:var(--accent)}
 .chartbox{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px}
 .chartbox .row{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--muted);gap:8px;flex-wrap:wrap}
 .price{color:var(--ink);font-size:16px}
-canvas{width:100%;height:200px;display:block;margin-top:6px}
+canvas{width:100%;height:190px;display:block;margin-top:6px}
 .legend{display:flex;gap:14px;font-size:12px;color:var(--muted);margin-top:4px;flex-wrap:wrap}
 .legend i{display:inline-block;width:14px;height:2px;vertical-align:middle;margin-right:5px}
-.signal{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;align-items:center;
-  border-left:6px solid var(--sig,var(--wait));background:var(--panel);border-radius:6px;padding:14px 16px}
-.signal .big{font-family:var(--display);font-weight:800;font-size:34px;color:var(--sig,var(--wait));grid-row:span 2;min-width:110px}
-.signal .why{font-size:14px;min-width:0}
-.signal .meta{font-family:var(--mono);font-size:12px;color:var(--muted);min-width:0}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .stat{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:8px;text-align:center}
 .stat b{display:block;font-family:var(--mono);font-size:18px;font-variant-numeric:tabular-nums}
 .stat span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-h2{font-family:var(--display);font-weight:600;font-size:18px;margin:4px 0 0}
 .jhead{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .journal{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:6px}
 table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
@@ -68,42 +83,52 @@ td.mono{font-family:var(--mono)}
 .empty{padding:14px;color:var(--muted);font-size:13px}
 .err{color:var(--sell);font-size:13px;margin:0}
 .warn{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
-@media (max-width:420px){.stats{grid-template-columns:repeat(2,1fr)}.signal .big{font-size:28px;min-width:90px}}
+@media (max-width:420px){.stats{grid-template-columns:repeat(2,1fr)}.signal .big{font-size:28px;min-width:92px}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <h1>Siyal <span>Onèt</span></h1>
-    <span class="tag" id="mode">Vèsyon 2 · Done reyèl</span>
+    <span class="tag">Vèsyon 3 · Plizyè pè</span>
   </header>
 
-  <div class="keybox" id="keybox">
+  <div class="box" id="keybox">
     <h2>Kle API Twelve Data</h2>
-    <p class="note">Kreye yon kont gratis sou twelvedata.com, kopye kle API ou a, epi kole l isit la. Li rete sèlman sou telefòn ou.</p>
-    <div class="keyrow"><input id="key" placeholder="Kole kle a isit" autocomplete="off" autocapitalize="off" spellcheck="false"><button id="saveKey">Anrejistre</button></div>
+    <p class="note">Kole kle API Twelve Data ou a isit la. Li rete sèlman sou telefòn ou.</p>
+    <div class="keyrow"><input type="text" id="key" placeholder="Kole kle a isit" autocomplete="off" autocapitalize="off" spellcheck="false"><button id="saveKey">Anrejistre</button></div>
     <p class="err" id="err" hidden></p>
   </div>
 
-  <div class="controls">
-    <label for="pair">Chwazi yon pè
-      <select id="pair"><option>EUR/USD</option><option>GBP/USD</option><option>USD/JPY</option><option>AUD/USD</option><option>EUR/JPY</option><option>USD/CAD</option></select>
-    </label>
-    <label for="tf">Kad tan
-      <select id="tf"><option value="1min">M1 · ekspirasyon 1 min</option><option value="5min">M5 · ekspirasyon 5 min</option></select>
-    </label>
+  <div class="signal" id="sig">
+    <div class="big" id="sigBig">TANN<small id="sigPair">—</small></div>
+    <div class="why" id="sigWhy">N ap chaje done yo…</div>
+    <div class="meta" id="sigMeta">—</div>
   </div>
+
+  <div class="box">
+    <div class="row2">
+      <div><div class="lbl">Son ak alèt</div><p class="note" id="soundNote">Peze bouton an pou w tande lè yon siyal parèt.</p></div>
+      <button class="ghost" id="soundBtn">🔕 Son OFF</button>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="lbl">Pè pou siveye (1 a 4)</div>
+    <div class="chips" id="chips"></div>
+    <div class="row2">
+      <div><div class="lbl">Kad tan</div>
+        <select id="tf"><option value="1min">M1 · ekspirasyon 1 min</option><option value="5min">M5 · ekspirasyon 5 min</option></select></div>
+    </div>
+    <p class="note" id="credits">—</p>
+  </div>
+
+  <div class="board" id="board"></div>
 
   <div class="chartbox">
-    <div class="row"><span id="pairLbl">EUR/USD</span><span class="price" id="price">—</span><span id="rsiLbl">RSI —</span></div>
+    <div class="row"><span id="pairLbl">—</span><span class="price" id="price">—</span><span id="rsiLbl">RSI —</span></div>
     <canvas id="cv"></canvas>
     <div class="legend"><span><i style="background:var(--accent)"></i>EMA 9</span><span><i style="background:var(--muted)"></i>EMA 21</span><span id="upd">—</span></div>
-  </div>
-
-  <div class="signal" id="sig">
-    <div class="big" id="sigBig">TANN</div>
-    <div class="why" id="sigWhy">Mete kle API ou a pou n kòmanse.</div>
-    <div class="meta" id="sigMeta">—</div>
   </div>
 
   <div class="stats">
@@ -117,19 +142,27 @@ td.mono{font-family:var(--mono)}
   <div class="journal">
     <table><thead><tr><th>Lè</th><th>Pè</th><th>Siyal</th><th>Antre</th><th>Sòti</th><th>Rezilta</th></tr></thead>
     <tbody id="jbody"></tbody></table>
-    <div class="empty" id="jempty">Pa gen siyal ankò. Lè EMA 9 travèse EMA 21 epi RSI dakò, siyal la ap parèt isit, ni sa ki genyen ni sa ki pèdi.</div>
+    <div class="empty" id="jempty">Pa gen siyal ankò. Chak siyal ap parèt isit, ni sa ki genyen ni sa ki pèdi.</div>
   </div>
 
-  <p class="warn">Siyal yo kalkile sou bouji ki fin fèmen. Pri Twelve Data ka diferan yon ti kras ak pri Pocket Option. Pè OTC yo pa disponib. Plan gratis la bay 800 demann pa jou (apeprè 13 èdtan itilizasyon). Teste sou kont demo anvan. Trading gen gwo risk e ou ka pèdi tout lajan ou mete.</p>
+  <p class="warn">Siyal yo kalkile sou bouji ki fin fèmen. Antre sèlman pandan kontè a vèt (20 premye segonn yo). Pri Twelve Data ka diferan yon ti kras ak Pocket Option. Pè OTC yo pa disponib. Sou iPhone, app la dwe rete sou ekran an pou l ka sonnen, e bouton silans telefòn nan dwe louvri. Teste sou kont demo anvan. Trading gen gwo risk e ou ka pèdi tout lajan ou mete.</p>
 </div>
 
 <script>
 const $=id=>document.getElementById(id);
 const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},
   set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-let key=store.get("tdkey",""), journal=store.get("journal",[]), candles=[], timer=null, lastSigBar=null;
+const ALL=["EUR/USD","GBP/USD","USD/JPY","AUD/USD","EUR/JPY","USD/CAD"];
+const FRESH=20; // seconds you have to enter
+let key=store.get("tdkey",""), journal=store.get("journal",[]), sel=store.get("pairs",["EUR/USD","GBP/USD","USD/JPY"]);
+let focus=sel[0], data={}, timer=null, lastSig=null, soundOn=store.get("sound",false), actx=null, wake=null;
+$("tf").value=store.get("tf","1min");
+const tz=(()=>{try{return Intl.DateTimeFormat().resolvedOptions().timeZone||"UTC"}catch(e){return "UTC"}})();
 const dec=p=>p.includes("JPY")?3:5;
-const minutes=()=>$("tf").value==="5min"?5:1;
+const mins=()=>$("tf").value==="5min"?5:1;
+const tfLbl=()=>$("tf").value==="5min"?"M5":"M1";
+const tOf=s=>new Date(s.replace(" ","T")).getTime();
+const hm=s=>s.slice(11,16);
 
 function ema(v,n){const k=2/(n+1),o=[];v.forEach((x,i)=>o.push(i?x*k+o[i-1]*(1-k):x));return o}
 function rsi(v,n=14){const o=Array(v.length).fill(50);let g=0,l=0;
@@ -137,84 +170,138 @@ function rsi(v,n=14){const o=Array(v.length).fill(50);let g=0,l=0;
     if(i<=n){g+=u;l+=w;if(i===n){g/=n;l/=n;o[i]=100-100/(1+(l?g/l:100))}}
     else{g=(g*(n-1)+u)/n;l=(l*(n-1)+w)/n;o[i]=100-100/(1+(l?g/l:100))}}return o}
 
+/* ---------- credits ---------- */
+function useCredits(n){const today=new Date().toDateString();let c=store.get("cred",{d:today,n:0});
+  if(c.d!==today)c={d:today,n:0};c.n+=n;store.set("cred",c);showCredits()}
+function showCredits(){const today=new Date().toDateString();let c=store.get("cred",{d:today,n:0});if(c.d!==today)c={d:today,n:0};
+  const perHr=sel.length*(60/mins()),left=Math.max(0,800-c.n);
+  $("credits").textContent=`Kredi jodi a: ${c.n}/800 · ak ${sel.length} pè sou ${tfLbl()}, sa rete apeprè ${(left/perHr).toFixed(1)} èdtan.`}
+
+/* ---------- sound ---------- */
+function unlock(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();actx.resume()}catch(e){}}
+function beep(up){if(!soundOn||!actx)return;const f=up?[660,880,1100]:[1100,880,660];
+  f.forEach((hz,i)=>{const o=actx.createOscillator(),g=actx.createGain(),t=actx.currentTime+i*.2;
+    o.frequency.value=hz;o.type="sine";g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.35,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.18);
+    o.connect(g).connect(actx.destination);o.start(t);o.stop(t+.2)});
+  try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){}}
+async function keepAwake(){try{if(soundOn&&navigator.wakeLock&&!document.hidden)wake=await navigator.wakeLock.request("screen")}catch(e){}}
+function renderSound(){$("soundBtn").textContent=soundOn?"🔔 Son ON":"🔕 Son OFF";$("soundBtn").classList.toggle("on",soundOn);
+  $("soundNote").textContent=soundOn?(actx?"W ap tande yon son lè yon siyal parèt. Kite app la sou ekran an.":"Peze nenpòt kote sou paj la pou aktive son an."):"Peze bouton an pou w tande lè yon siyal parèt."}
+$("soundBtn").addEventListener("click",()=>{soundOn=!soundOn;store.set("sound",soundOn);if(soundOn){unlock();beep(true);keepAwake()}renderSound()});
+document.addEventListener("pointerdown",()=>{if(soundOn&&!actx){unlock();renderSound();keepAwake()}},{passive:true});
+
+/* ---------- chips ---------- */
+function renderChips(){$("chips").innerHTML=ALL.map(p=>`<button class="chip ${sel.includes(p)?"on":""}" data-p="${p}">${p}</button>`).join("")}
+$("chips").addEventListener("click",e=>{const p=e.target.dataset&&e.target.dataset.p;if(!p)return;
+  if(sel.includes(p)){if(sel.length===1)return;sel=sel.filter(x=>x!==p)}else{if(sel.length>=4)return;sel=ALL.filter(x=>x===p||sel.includes(x))}
+  store.set("pairs",sel);if(!sel.includes(focus))focus=sel[0];renderChips();showCredits();start()});
+
+/* ---------- data ---------- */
 async function load(){
   if(!key)return;
-  const pair=$("pair").value;
   try{
-    const r=await fetch(`https://api.twelvedata.com/time_series?symbol=${encodeURIComponent(pair)}&interval=${$("tf").value}&outputsize=120&apikey=${encodeURIComponent(key)}`);
-    const j=await r.json();
-    if(j.status==="error"){showErr(j.code===401?"Kle API a pa bon. Verifye l epi kole l ankò.":j.code===429?"Ou rive nan limit demann yo. Tann yon minit.":(j.message||"Erè nan done yo."));return}
+    const url=`https://api.twelvedata.com/time_series?symbol=${encodeURIComponent(sel.join(","))}&interval=${$("tf").value}&outputsize=100&timezone=${encodeURIComponent(tz)}&apikey=${encodeURIComponent(key)}`;
+    const j=await (await fetch(url)).json();
+    if(j.status==="error"&&!j.values){return showErr(j.code===401?"Kle API a pa bon. Verifye l epi kole l ankò.":j.code===429?"Ou rive nan limit demann yo. Tann yon minit, oswa chwazi mwens pè.":(j.message||"Erè nan done yo."))}
+    useCredits(sel.length);
     $("err").hidden=true;$("keybox").hidden=true;
-    // newest first from API → reverse; drop newest (still forming)
-    const all=j.values.map(v=>({t:v.datetime,o:+v.open,h:+v.high,l:+v.low,c:+v.close})).reverse();
-    const forming=all[all.length-1];
-    candles=all.slice(0,-1);
-    settle(pair,all);
-    evaluate(pair,forming);
+    const res=sel.length===1?{[sel[0]]:j}:j;
+    sel.forEach(p=>{const v=res[p];if(!v||v.status==="error"||!v.values){data[p]={err:true};return}process(p,v.values)});
+    $("upd").textContent="Mizajou "+new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit",second:"2-digit"});
+    render();
   }catch(e){showErr("Pa ka konekte. Verifye entènèt ou.")}
 }
 function showErr(m){$("err").textContent=m;$("err").hidden=false;$("keybox").hidden=false}
 
-function settle(pair,all){
-  let changed=false;
-  journal.forEach(s=>{if(s.res||s.pair!==pair||s.tf!==$("tf").value)return;
-    const idx=all.findIndex(k=>k.t===s.bar);if(idx<0)return;
-    const exit=all[idx+1];const isClosed=idx+1<all.length-1; // exit candle must be closed
-    if(exit&&isClosed){s.exit=exit.c;s.res=(s.s==="BUY"?exit.c>s.entry:exit.c<s.entry)?"win":"loss";changed=true}});
-  if(changed)store.set("journal",journal);
-}
-
-function evaluate(pair,forming){
-  const cl=candles.map(k=>k.c),e9=ema(cl,9),e21=ema(cl,21),r=rsi(cl),i=cl.length-1;
+function process(pair,values){
+  const step=mins()*60000,now=Date.now();
+  const all=values.map(v=>({t:v.datetime,o:+v.open,h:+v.high,l:+v.low,c:+v.close})).reverse();
+  const closed=all.filter(k=>tOf(k.t)+step<=now+1500);
+  const forming=all[all.length-1];
+  settle(pair,closed);
+  const cl=closed.map(k=>k.c),e9=ema(cl,9),e21=ema(cl,21),r=rsi(cl),i=cl.length-1;
   const cross=Math.sign(e9[i]-e21[i])!==Math.sign(e9[i-1]-e21[i-1]);
-  let s="TANN",why="Pa gen kwazman EMA sou dènye bouji a. Pa antre.";
+  let s="TANN",why="Pa gen kwazman EMA.";
   if(cross&&e9[i]>e21[i]&&r[i]<70){s="BUY";why=`EMA 9 sot travèse anlè EMA 21, RSI ${r[i].toFixed(0)}.`}
   else if(cross&&e9[i]<e21[i]&&r[i]>30){s="SELL";why=`EMA 9 sot travèse anba EMA 21, RSI ${r[i].toFixed(0)}.`}
-  else if(cross)why=`Gen kwazman, men RSI ${r[i].toFixed(0)} twò ekstrèm. Pa antre.`;
-  const last=candles[i],d=dec(pair);
+  else if(cross)why=`Kwazman, men RSI ${r[i].toFixed(0)} twò ekstrèm.`;
+  const last=closed[i];
+  data[pair]={closed,forming,e9,e21,r:r[i],s,why,bar:last.t};
   if(s!=="TANN"&&!journal.some(x=>x.bar===last.t&&x.pair===pair&&x.tf===$("tf").value)){
-    journal.push({s,pair,tf:$("tf").value,bar:last.t,entry:last.c,time:last.t.slice(11,16)});store.set("journal",journal)}
-  $("pairLbl").textContent=pair+" · "+($("tf").value==="5min"?"M5":"M1");
-  $("price").textContent=forming.c.toFixed(d);$("rsiLbl").textContent="RSI "+r[i].toFixed(0);
-  $("sig").style.setProperty("--sig",s==="BUY"?"var(--buy)":s==="SELL"?"var(--sell)":"var(--wait)");
-  $("sigBig").textContent=s;$("sigWhy").textContent=why;
-  $("sigMeta").textContent=s==="TANN"?"Pifò tan, pi bon desizyon an se pa antre.":`Bouji ${last.t.slice(11,16)} · antre kounye a · ekspirasyon ${minutes()} min`;
-  $("upd").textContent="Mizajou "+new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit",second:"2-digit"});
-  draw(e9,e21);renderJ();
+    journal.push({s,pair,tf:$("tf").value,bar:last.t,entry:last.c,time:hm(last.t)});store.set("journal",journal);
+    const age=(now-(tOf(last.t)+step))/1000;
+    if(age<FRESH+5){lastSig={pair,s,why,bar:last.t,entry:last.c};beep(s==="BUY");
+      const el=$("sig");el.classList.remove("flash");void el.offsetWidth;el.classList.add("flash")}
+  }
 }
+function settle(pair,closed){let ch=false;
+  journal.forEach(s=>{if(s.res||s.pair!==pair||s.tf!==$("tf").value)return;const idx=closed.findIndex(k=>k.t===s.bar);
+    if(idx>=0&&closed[idx+1]){const x=closed[idx+1].c;s.exit=x;s.res=(s.s==="BUY"?x>s.entry:x<s.entry)?"win":"loss";ch=true}});
+  if(ch)store.set("journal",journal)}
 
-function draw(e9,e21){
+/* ---------- render ---------- */
+function tickSignal(){
+  const step=mins()*60000,el=$("sig");
+  if(lastSig){const age=Math.floor((Date.now()-(tOf(lastSig.bar)+step))/1000);
+    if(age<60*mins()){const d=dec(lastSig.pair),fresh=age<FRESH;
+      el.style.setProperty("--sig",lastSig.s==="BUY"?"var(--buy)":"var(--sell)");
+      $("sigBig").firstChild.textContent=lastSig.s;$("sigPair").textContent=lastSig.pair+" · "+tfLbl();
+      $("sigWhy").textContent=lastSig.why;
+      $("sigMeta").innerHTML=fresh?`<b>Antre kounye a · ${FRESH-age}s rete</b><br>Antre ${lastSig.entry.toFixed(d)} · ekspirasyon ${mins()} min`
+        :`Twò ta pou antre (${age}s). Tann pwochen siyal la.`;
+      return}}
+  el.style.setProperty("--sig","var(--wait)");$("sigBig").firstChild.textContent="TANN";
+  $("sigPair").textContent=sel.length+" pè · "+tfLbl();
+  $("sigWhy").textContent=key?"Pa gen siyal fre kounye a. App la ap siveye "+sel.join(", ")+".":"Mete kle API ou a pou n kòmanse.";
+  $("sigMeta").textContent="Pifò tan, pi bon desizyon an se pa antre.";
+}
+function render(){
+  $("board").innerHTML=sel.map(p=>{const x=data[p]||{};const st=x.err?"ERR":(x.s||"…");
+    return `<button class="pcard ${p===focus?"focus":""}" data-p="${p}"><span class="top">${p}<span class="st ${st}">${x.err?"ERÈ":st}</span></span>
+      <span class="num">${x.forming?x.forming.c.toFixed(dec(p)):"—"} · RSI ${x.r!=null?x.r.toFixed(0):"—"}</span></button>`}).join("");
+  const x=data[focus];$("pairLbl").textContent=focus+" · "+tfLbl();
+  if(x&&x.closed){$("price").textContent=x.forming.c.toFixed(dec(focus));$("rsiLbl").textContent="RSI "+x.r.toFixed(0);draw(x)}
+  renderJ();tickSignal();
+}
+$("board").addEventListener("click",e=>{const b=e.target.closest(".pcard");if(!b)return;focus=b.dataset.p;render()});
+
+function draw(x){
   const cv=$("cv"),dpr=window.devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;
-  cv.width=w*dpr;cv.height=h*dpr;const x=cv.getContext("2d");x.scale(dpr,dpr);
+  cv.width=w*dpr;cv.height=h*dpr;const g=cv.getContext("2d");g.scale(dpr,dpr);
   const cs=getComputedStyle(document.documentElement),col=v=>cs.getPropertyValue(v).trim();
-  const show=candles.slice(-50),off=candles.length-show.length;if(!show.length)return;
+  const show=x.closed.slice(-50),off=x.closed.length-show.length;if(!show.length)return;
   const lo=Math.min(...show.map(k=>k.l)),hi=Math.max(...show.map(k=>k.h)),pad=(hi-lo)*0.08||1e-5;
   const Y=v=>h-((v-(lo-pad))/((hi+pad)-(lo-pad)))*h,bw=w/show.length;
-  x.strokeStyle=col("--line");x.lineWidth=1;for(let g=1;g<4;g++){x.beginPath();x.moveTo(0,h*g/4);x.lineTo(w,h*g/4);x.stroke()}
-  show.forEach((k,j)=>{x.strokeStyle=x.fillStyle=col(k.c>=k.o?"--buy":"--sell");const cx=j*bw+bw/2;
-    x.beginPath();x.moveTo(cx,Y(k.h));x.lineTo(cx,Y(k.l));x.stroke();
-    const t=Y(Math.max(k.o,k.c)),b=Y(Math.min(k.o,k.c));x.fillRect(j*bw+bw*.18,t,bw*.64,Math.max(1,b-t))});
-  [[e9,"--accent"],[e21,"--muted"]].forEach(([a,c])=>{x.strokeStyle=col(c);x.lineWidth=1.6;x.beginPath();
-    show.forEach((_,j)=>{const px=j*bw+bw/2,v=a[off+j];j?x.lineTo(px,Y(v)):x.moveTo(px,Y(v))});x.stroke()});
+  g.strokeStyle=col("--line");g.lineWidth=1;for(let i=1;i<4;i++){g.beginPath();g.moveTo(0,h*i/4);g.lineTo(w,h*i/4);g.stroke()}
+  show.forEach((k,j)=>{g.strokeStyle=g.fillStyle=col(k.c>=k.o?"--buy":"--sell");const cx=j*bw+bw/2;
+    g.beginPath();g.moveTo(cx,Y(k.h));g.lineTo(cx,Y(k.l));g.stroke();
+    const t=Y(Math.max(k.o,k.c)),b=Y(Math.min(k.o,k.c));g.fillRect(j*bw+bw*.18,t,bw*.64,Math.max(1,b-t))});
+  [[x.e9,"--accent"],[x.e21,"--muted"]].forEach(([a,c])=>{g.strokeStyle=col(c);g.lineWidth=1.6;g.beginPath();
+    show.forEach((_,j)=>{const px=j*bw+bw/2,v=a[off+j];j?g.lineTo(px,Y(v)):g.moveTo(px,Y(v))});g.stroke()});
 }
-
 function renderJ(){
   const done=journal.filter(j=>j.res),w=done.filter(j=>j.res==="win").length;
   $("sTot").textContent=journal.length;$("sWin").textContent=w;$("sLoss").textContent=done.length-w;
   $("sRate").textContent=done.length?Math.round(w/done.length*100)+"%":"—";
   $("jempty").hidden=journal.length>0;
-  $("jbody").innerHTML=journal.slice().reverse().slice(0,50).map(j=>`<tr><td class="mono">${j.time}</td><td>${j.pair} ${j.tf==="5min"?"M5":"M1"}</td>
+  $("jbody").innerHTML=journal.slice().reverse().slice(0,60).map(j=>`<tr><td class="mono">${j.time}</td><td>${j.pair} ${j.tf==="5min"?"M5":"M1"}</td>
     <td style="color:var(${j.s==="BUY"?"--buy":"--sell"});font-weight:600">${j.s}</td><td class="mono">${j.entry.toFixed(dec(j.pair))}</td>
     <td class="mono">${j.exit!=null?j.exit.toFixed(dec(j.pair)):"…"}</td>
     <td><span class="pill ${j.res||"open"}">${j.res==="win"?"Genyen":j.res==="loss"?"Pèdi":"Ap tann"}</span></td></tr>`).join("");
 }
 
-function start(){clearInterval(timer);if(!key){$("keybox").hidden=false;return}load();timer=setInterval(load,60000)}
+/* ---------- timing: refresh 4 s after each candle closes ---------- */
+function schedule(){clearTimeout(timer);const step=mins()*60000,wait=step-(Date.now()%step)+4000;
+  timer=setTimeout(()=>{load();schedule()},wait)}
+function start(){clearTimeout(timer);data={};render();if(!key){$("keybox").hidden=false;return}load();schedule()}
+
 $("saveKey").addEventListener("click",()=>{key=$("key").value.trim();store.set("tdkey",key);start()});
-$("pair").addEventListener("change",start);$("tf").addEventListener("change",start);
+$("tf").addEventListener("change",()=>{store.set("tf",$("tf").value);lastSig=null;showCredits();start()});
 $("clearJ").addEventListener("click",()=>{journal=[];store.set("journal",journal);renderJ()});
-document.addEventListener("visibilitychange",()=>{if(document.hidden)clearInterval(timer);else start()});
-renderJ();start();
+document.addEventListener("visibilitychange",()=>{if(document.hidden)clearTimeout(timer);else{start();keepAwake()}});
+window.addEventListener("resize",()=>{const x=data[focus];if(x&&x.closed)draw(x)});
+setInterval(tickSignal,1000);
+renderChips();renderSound();showCredits();start();
 </script>
 </body>
 </html>
